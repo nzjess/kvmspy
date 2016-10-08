@@ -1,0 +1,41 @@
+### Gradle template
+.gradle/
+build/
+
+# Ignore Gradle GUI config
+gradle-app.setting
+
+# Avoid ignoring Gradle wrapper jar file (.jar files are usually ignored)
+!gradle-wrapper.jar
+### Java template
+*.class
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+# Package Files #
+*.war
+*.ear
+
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
+
+# IntelliJ specific
+signals-collector.iml
+.idea/
+*iml
+
+# Eclipse specific
+.project
+.classpath
+.settings/
+/bin/
+
+# Created by .ignore support plugin (hsz.mobi)
+.DS_Store
+
+# log file
+*.log
+
+application-development.yml
+application-local.yml
