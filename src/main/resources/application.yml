@@ -1,0 +1,16 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/kvmspy
+    username: root
+
+kvmspy:
+  ssh:
+    user: root
+    identity: /Users/jesse/.ssh/id_dsa
+
+  parser:
+    filesystem:
+      name: Filesystem
+      mount: Mounted on
+      size: 1K-blocks
+      used: Used
