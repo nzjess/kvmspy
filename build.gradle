@@ -1,0 +1,45 @@
+buildscript {
+    ext {
+        springBootVersion = '1.4.0.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'spring-boot'
+
+jar {
+    baseName = 'kvmspy'
+    version = '0.0.1-SNAPSHOT'
+}
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile('org.springframework.boot:spring-boot-starter-data-jpa') {
+        exclude  group: 'org.hibernate', module: 'hibernate-core'
+        exclude  group: 'org.hibernate', module: 'hibernate-entitymanager'
+        exclude  group: 'org.hibernate', module: 'hibernate-validator'
+    }
+    compile('org.springframework.boot:spring-boot-starter-data-rest')
+    compile('org.springframework.boot:spring-boot-starter-web')
+    compile('org.springframework.boot:spring-boot-starter-jdbc')
+    compile('org.apache.commons:commons-lang3:3.4')
+    compile('org.projectlombok:lombok')
+    compile('com.fasterxml.jackson.datatype:jackson-datatype-jsr310')
+    compile('org.eclipse.persistence:eclipselink:2.5.2')
+    compile('com.mycila:mycila-xmltool:4.0.ga')
+    runtime('com.zaxxer:HikariCP:2.5.1')
+    runtime('mysql:mysql-connector-java:5.1.39')
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+}
