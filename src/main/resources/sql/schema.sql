@@ -26,8 +26,8 @@ CREATE TABLE machine (
 CREATE TABLE kvm_domain (
   id                  BIGINT PRIMARY KEY AUTO_INCREMENT,
   snapshot_id         BIGINT      NOT NULL,
-  physical_machine_id BIGINT,
-  virtual_machine_id  BIGINT,
+  physical_machine_id BIGINT      NOT NULL,
+  virtual_machine_id  BIGINT      NOT NULL,
   state               VARCHAR(16) NOT NULL,
   cpus                INT,
   cpu_model           VARCHAR(32),
@@ -40,7 +40,7 @@ CREATE TABLE kvm_domain (
 CREATE TABLE kvm_disk_file_device (
   id            BIGINT PRIMARY KEY AUTO_INCREMENT,
   snapshot_id   BIGINT       NOT NULL,
-  kvm_domain_id BIGINT,
+  kvm_domain_id BIGINT       NOT NULL,
   source        VARCHAR(256) NOT NULL,
   driver_name   VARCHAR(16)  NOT NULL,
   driver_type   VARCHAR(16)  NOT NULL,
@@ -51,7 +51,7 @@ CREATE TABLE kvm_disk_file_device (
 CREATE TABLE file_system (
   id          BIGINT PRIMARY KEY AUTO_INCREMENT,
   snapshot_id BIGINT       NOT NULL,
-  machine_id  BIGINT,
+  machine_id  BIGINT       NOT NULL,
   name        VARCHAR(128) NOT NULL,
   mount       VARCHAR(128) NOT NULL,
   size_kib    INT          NOT NULL,
@@ -61,7 +61,7 @@ CREATE TABLE file_system (
 CREATE TABLE network_interface (
   id          BIGINT PRIMARY KEY AUTO_INCREMENT,
   snapshot_id BIGINT       NOT NULL,
-  machine_id  BIGINT,
+  machine_id  BIGINT       NOT NULL,
   name        VARCHAR(16)  NOT NULL,
   inet        VARCHAR(16)  NOT NULL,
   netmask     VARCHAR(16)  NOT NULL,

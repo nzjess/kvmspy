@@ -25,12 +25,9 @@ repositories {
     mavenCentral()
 }
 
+
 dependencies {
-    compile('org.springframework.boot:spring-boot-starter-data-jpa') {
-        exclude  group: 'org.hibernate', module: 'hibernate-core'
-        exclude  group: 'org.hibernate', module: 'hibernate-entitymanager'
-        exclude  group: 'org.hibernate', module: 'hibernate-validator'
-    }
+    compile('org.springframework.boot:spring-boot-starter-data-jpa')
     compile('org.springframework.boot:spring-boot-starter-data-rest')
     compile('org.springframework.boot:spring-boot-starter-web')
     compile('org.springframework.boot:spring-boot-starter-jdbc')
@@ -38,8 +35,8 @@ dependencies {
     compile('org.projectlombok:lombok')
     compile('com.jcraft:jsch:0.1.54')
     compile('com.fasterxml.jackson.datatype:jackson-datatype-jsr310')
-    compile('org.eclipse.persistence:eclipselink:2.5.2')
     runtime('com.zaxxer:HikariCP:2.5.1')
     runtime('mysql:mysql-connector-java:5.1.39')
+    runtime('org.hibernate:hibernate-java8')
     testCompile('org.springframework.boot:spring-boot-starter-test')
 }
