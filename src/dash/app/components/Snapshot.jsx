@@ -4,8 +4,10 @@ import PhysicalMachine from "./PhysicalMachine.jsx";
 
 let Snapshot = (snapshot) => (
     <div>
-        {snapshot.physicalMachines.map(machine =>
-            <PhysicalMachine key={machine.id} machine={machine} />
+        {snapshot.physicalMachines.slice().sort(function (a, b) {
+            return a.domain.localeCompare(b.domain);
+        }).map(machine =>
+            <PhysicalMachine key={"pm" + machine.id} machine={machine}/>
         )}
     </div>
 )

@@ -5,8 +5,6 @@ import Snapshot from "./components/Snapshot.jsx";
 
 const KvmSpyApp = () => (
     <div>
-        <SnapshotSummariesList />
-        <SnapshotSummaryFilterControls/>
         <Snapshot/>
     </div>
 )

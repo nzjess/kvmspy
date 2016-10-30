@@ -24,22 +24,35 @@ function getStyles(props, context) {
             position: 'relative',
             height: '30px',
             width: '100%',
-            backgroundColor: palette.primary3Color,
-            borderRadius: 0,
+            backgroundColor: props.backgroundColor || palette.primary3Color,
+            borderRadius: 3,
             margin: 0,
             overflow: 'hidden',
+            marginBottom: '1px',
+            fontWeight: props.labelBold ? 'bold' : 'normal'
         },
         bar: {
             position: 'absolute',
             height: '100%',
             left: `${getRelativeValue(start, min, max)}%`,
-            right: `${100-getRelativeValue(end, min, max)}%`,
-            backgroundColor: props.color || palette.primary1Color
+            right: `${100 - getRelativeValue(end, min, max)}%`,
+            backgroundColor: props.color || palette.primary1Color,
+            borderRadius: 3
         },
         label: {
-            zIndex: 1
+            zIndex: 1,
         }
     };
+
+    if (props.background) {
+        styles.root.background = props.background;
+    }
+    if (props.barBackground) {
+        styles.bar.background = props.barBackground;
+    }
+    if (props.labelMargin) {
+        styles.label.marginLeft = props.labelMargin;
+    }
 
     return styles;
 }
@@ -48,12 +61,17 @@ class Debar extends Component {
 
     static propTypes = {
         color: PropTypes.string,
+        backgroundColor: PropTypes.string,
         style: PropTypes.object,
         min: PropTypes.number,
         max: PropTypes.number,
         start: PropTypes.number,
         end: PropTypes.number,
-        label: PropTypes.string
+        label: PropTypes.string,
+        labelMargin: PropTypes.number,
+        labelBold: PropTypes.bool,
+        background: PropTypes.string,
+        barBackground: PropTypes.string
     };
 
     static defaultProps = {
@@ -61,7 +79,10 @@ class Debar extends Component {
         max: 100,
         start: 0,
         end: 100,
-        label: ""
+        label: "",
+        labelMargin: 10,
+        labelBold: false,
+        background: null
     };
 
     static contextTypes = {
