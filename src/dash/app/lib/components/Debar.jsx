@@ -33,15 +33,18 @@ function getStyles(props, context) {
             position: 'absolute',
             height: '100%',
             left: `${getRelativeValue(start, min, max)}%`,
-            right: `${getRelativeValue(end, min, max)}%`,
+            right: `${100-getRelativeValue(end, min, max)}%`,
             backgroundColor: props.color || palette.primary1Color
+        },
+        label: {
+            zIndex: 1
         }
     };
 
     return styles;
 }
 
-class Waterfall extends Component {
+class Debar extends Component {
 
     static propTypes = {
         color: PropTypes.string,
@@ -78,10 +81,10 @@ class Waterfall extends Component {
         return (
             <div {...other} style={prepareStyles(Object.assign(styles.root, style))}>
                 <div style={prepareStyles(styles.bar)}/>
-                {label}
+                <span style={prepareStyles(styles.label)}>{label}</span>
             </div>
         );
     }
 }
 
-export default Waterfall;
+export default Debar;
