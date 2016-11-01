@@ -2,8 +2,14 @@ import React, {Component} from "react";
 import Paper from "material-ui/Paper";
 import Debar from "../lib/components/Debar.jsx";
 
-function label(domain, memory) {
-    return Math.ceil(memory / (1024 * 1024)) + "Gb" + ": " + domain;
+const GB = (1024 * 1024);
+
+function gb(memory) {
+    return Math.ceil(memory / GB) + "Gb";
+}
+function label(domain, memory, total) {
+    return gb(memory) + ": " + domain +
+        (total ? (" (" + gb(total) + " used)") : "");
 }
 
 class PhysicalMachine extends Component {
@@ -14,6 +20,7 @@ class PhysicalMachine extends Component {
         } = this.props;
 
         let kvms = [];
+        let memory = machine.memory - (2 * GB);
 
         machine.kvmDomains.map(kvm => {
             kvms.push({
@@ -30,7 +37,8 @@ class PhysicalMachine extends Component {
         }).map(kvm => {
             total += kvm.memory
         });
-        let max = Math.max(machine.memory, total);
+        let max = Math.max(memory, total);
+        let min = Math.min(memory, total);
 
         kvms.sort(function (a, b) {
             return a.memory - b.memory;
@@ -46,13 +54,23 @@ class PhysicalMachine extends Component {
             start = end;
         })
 
+        let background = "linear-gradient(to right, rgb(64,150,238) "
+        if (total > memory) {
+            let to = Math.min((1 - ((total - memory) / total)) * 100, 100);
+            background += to + "%, rgb(255,0,29) 100%)"
+        }
+        else {
+            let to = Math.min((1 - ((memory - total) / memory)) * 100, 100);
+            background += to + "%, rgb(29,255,0) 100%)"
+        }
+
         return (
             <Paper zDepth={4} style={{marginBottom: '50px'}}>
                 <Debar key={"mm" + machine.id}
-                       background="linear-gradient(to bottom, rgb(248,128,102) 0%, rgb(255,0,29) 100%)"
-                       barBackground="linear-gradient(to bottom, rgb(122,188,255) 0%, rgb(64,150,238) 100%)"
-                       min={0} max={max} start={0} end={machine.memory}
-                       label={label(machine.domain, machine.memory)} labelMargin={5} labelBold={true}/>
+                       background={background} color="rgb(64,150,238)"
+                       min={0} max={max} start={0} end={min}
+                       label={label(machine.domain, memory, total)}
+                       labelMargin={5} labelBold={true}/>
 
                 {kvms.filter(function running(kvm) {
                     return kvm.state == "running"
@@ -65,14 +83,11 @@ class PhysicalMachine extends Component {
                 {kvms.filter(function running(kvm) {
                     return kvm.state != "running"
                 }).map(kvm =>
-                    <Debar key={"mk" + kvm.id} color="rgb(148,148,148)"
+                    <Debar key={"mk" + kvm.id}
+                           backgroundColor="rgb(158,158,158)" color="rgb(128,128,128)"
                            min={0} max={max} start={0} end={kvm.memory}
                            label={kvm.label} labelMargin={20}/>
                 )}
-
-                <Debar key={"mmt"} color="rgb(212,212,212)"
-                       min={0} max={max} start={0} end={total}
-                       label={label("Total Allocated", total)} labelMargin={5}/>
             </Paper>
         );
     }
